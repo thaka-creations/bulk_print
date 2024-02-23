@@ -1,3 +1,4 @@
+
 const axios = require('axios');
 const { exec } = require('child_process');
 
@@ -24,14 +25,14 @@ const printFile = async (docUrl) => {
         console.error('Error fetching file:', error.message);
     }
 };
-
+module.exports = printFile;
 // Example usage
-const fileLinks = [
-    'http://192.168.214.200/sharedservice/media/2024/02/22/18/bf3a3889-b54e-43a9-b93e-14978f9247ca.pdf',
-    'https://css4.pub/2017/newsletter/drylab.pdf',
-    'https://www.princexml.com/samples/invoice/invoicesample.pdf'
-];
+// const fileLinks = [
+//     'http://192.168.214.200/sharedservice/media/2024/02/22/18/bf3a3889-b54e-43a9-b93e-14978f9247ca.pdf',
+//     'https://css4.pub/2017/newsletter/drylab.pdf',
+//     'https://www.princexml.com/samples/invoice/invoicesample.pdf'
+// ];
 
-fileLinks.forEach((fileLink) => {
-    printFile(fileLink);
-});
+// fileLinks.forEach((fileLink) => {
+//     printFile(fileLink);
+// });

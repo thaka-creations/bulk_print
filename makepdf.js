@@ -35,7 +35,7 @@ function createPdf(data, outputFilename) {
 function batchPrintFromJson(jsonData) {
     jsonData.forEach((data, index) => {
         const outputFilename = `output_${index + 1}.pdf`;
-        createPdf(data, outputFilename);
+        (data, outputFilename);
     });
 }
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queue Print Jobs</title>
+</head>
+<body>
+    <button onclick="printDocument('http://192.168.214.200/sharedservice/media/2024/02/22/18/bf3a3889-b54e-43a9-b93e-14978f9247ca.pdf')">Print Document 1</button>
+    <button onclick="printDocument('http://192.168.214.200/sharedservice/media/2024/02/22/18/bf3a3889-b54e-43a9-b93e-14978f9247ca.pdf')">Print Document 2</button>
+    <!-- Add more buttons for additional documents -->
+
+    <script>
+        function printDocument(url) {
+            var iframe = document.createElement('iframe');
+            iframe.style.visibility = 'hidden';
+            iframe.src = url;
+            // iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+            document.body.appendChild(iframe);
+
+            iframe.onload = function () {
+                setTimeout(function () {
+                    iframe.contentWindow.print();
+                    document.body.removeChild(iframe);
+                }, 1000); // Delay to allow the iframe to load the document
+            };
+        }
+    </script>
+</body>
+</html>

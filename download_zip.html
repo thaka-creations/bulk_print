@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+<script>
+    async function downloadFiles() {
+        const zip = new JSZip();
+        const currentDate = new Date().toISOString().split('T')[0];
+
+        const downloadedKeywords = new Map();
+
+        // Example files array
+        const files = [
+            { url: 'http://192.168.214.184/sharedservice/media/2024/02/23/09/2910637e-a574-438c-86e6-0ab413085a40.pdf', keyword: 'keyword1' },
+            { url: 'http://192.168.214.184/sharedservice/media/2024/02/23/09/2910637e-a574-438c-86e6-0ab413085a40.pdf', keyword: 'keyword2' },
+            // Add more files as needed
+        ];
+
+        const downloadPromises = files.map(async (fileEntry) => {
+            const response = await fetch(fileEntry.url);
+            const blob = await response.blob();
+
+            let keyword = fileEntry.keyword;
+
+            if (downloadedKeywords.has(keyword)) {
+                const count = downloadedKeywords.get(keyword) + 1;
+                downloadedKeywords.set(keyword, count);
+                keyword = `${keyword}_${count}`;
+            } else {
+                downloadedKeywords.set(keyword, 1);
+            }
+
+            zip.file(`${keyword}.pdf`, blob);
+        });
+
+        await Promise.all(downloadPromises);
+
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+        saveAs(zipBlob, `${currentDate}_files.zip`);
+    }
+
+    downloadFiles();
+</script>
+</body>
+</html>
